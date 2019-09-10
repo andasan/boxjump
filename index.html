@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<header>
+<title>Some Title</title>
+</header>
+
+<body onload="initGame()">
+<h1 id="gameName"></h1>
+<h2 id="gameVersion"><h2>
+<h3 id="gameCopyright"></h3>
+<h4 id="gameCompany"></h4>
+
+<button id="clickMe1" onclick="startGame()"></button>
+
+<script>
+var buttonTitle="Click Me"
+var gameVersion="0.01"
+var gameName="Game Title"
+var gameCopyright="C Me"
+var gameCompany="MyCompany"
+
+function initGame(){
+	var clickMe1 = document.getElementById("clickMe1");
+	var h1 = document.getElementById("gameName");
+	var h2 = document.getElementById("gameVersion");
+	var h3 = document.getElementById("gameCopyright");
+	var h4 = document.getElementById("gameCompany");
+
+	clickMe1.innerHTML = buttonTitle;
+	h1.innerHTML = gameName;
+	h2.innerHTML = gameVersion;
+	h3.innerHTML = gameCopyright;
+	h4.innerHTML = gameCompany;
+}
+function startGame(){
+	console.log("Hello World")
+}
+</script>
+</body>
+
+<footer>
+</footer>
+</html>
