@@ -30,14 +30,36 @@
 	});
 
 	var canvas = document.getElementById("canvas"),
-		ctx = canvas.getContext("2d"),
+		context = canvas.getContext("2d"),
 		width = 700,
-		height = 200
+		height = 200,
+		player = {
+			x: 0,
+			y: height - 100,
+			width: 20,
+			height: 20,
+			speed: 3,
+			velX: 0,
+			velY: 0,
+			jumping: false
+		},
+		floor = {
+			x: 0,
+			y: height - 50,
+			width: 700,
+			height: 20
+		}
 
 	canvas.width = width;
 	canvas.height = height;
 	function updateGame() {
-		
+		//draws the player onto the canvas
+		context.clearRect(0, 0, width, height);
+		context.fillStyle = "orange";
+		context.fillRect(player.x, player.y, player.width, player.height);
+
+		context.fillStyle = "white";
+		context.fillRect(floor.x, floor.y, floor.width, floor.height);
 	}
 
 	window.addEventListener("load", function () {
