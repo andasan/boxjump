@@ -49,25 +49,41 @@
 			width: 700,
 			height: 20
 		}
+		keys = [],
 		friction = 0.8,
 		gravity = 0.3;
 
 	canvas.width = width;
 	canvas.height = height;
 	function updateGame() {
-
 		player.velX++;
 		player.velX *= friction;
 		player.velY += gravity;
 		player.x += player.velX;
 		player.y += player.velY;
 
+
+		// check for up keys
+		if (keys[38] || keys[32]) {
+			// up arrow or space
+			if (!player.jumping) {
+				player.jumping = true;
+				player.velY = -player.speed * 2;
+				
+			}
+		}
+
+		// floor collision
 		if(player.y >= floor.y - player.height){
 			player.y = floor.y - player.height;
 			player.jumping = false;
 		}
-			
-			
+
+		//player hits the end
+		if((player.x + player.width) >= width){
+			player.x = 0;
+		}
+        
 		//draws the player onto the canvas
 		context.clearRect(0, 0, width, height);
 		context.fillStyle = "orange";
