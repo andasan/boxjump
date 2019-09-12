@@ -23,6 +23,12 @@
 	<footer></footer>
 
 	<script>
+	(function () {
+		//constant rendering or the game's looping logic || all browser support
+		var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+		window.requestAnimationFrame = requestAnimationFrame;
+	});
+
 	var canvas = document.getElementById("canvas"),
 		ctx = canvas.getContext("2d"),
 		width = 700,
@@ -30,7 +36,13 @@
 
 	canvas.width = width;
 	canvas.height = height;
+	function updateGame() {
+		
+	}
 
+	window.addEventListener("load", function () {
+		updateGame();
+	});
 	</script>
 </body>
 </html>
