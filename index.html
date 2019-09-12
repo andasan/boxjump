@@ -56,8 +56,16 @@
 	canvas.height = height;
 	function updateGame() {
 
+		player.velX++;
+		player.velX *= friction;
 		player.velY += gravity;
+		player.x += player.velX;
 		player.y += player.velY;
+
+		if(player.y >= floor.y - player.height){
+			player.y = floor.y - player.height;
+			player.jumping = false;
+		}
 			
 			
 		//draws the player onto the canvas
