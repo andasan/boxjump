@@ -6,9 +6,11 @@
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title>Platformer - Box Jump</title>
 		<style>
-			canvas {
-				border: 1px solid black;
+			*{ margin: 0; padding: 0;}
+			body{
 				background-color: rgb(80, 80, 80);
+			}
+			canvas {
 				position: absolute;
 				top: 50%;
 				left: 50%;
@@ -29,10 +31,12 @@
 		window.requestAnimationFrame = requestAnimationFrame;
 	});
 
+	//variable declarations
+	const GAME_WIDTH = 700, GAME_HEIGHT = 200;
 	var canvas = document.getElementById("canvas"),
 		context = canvas.getContext("2d"),
-		width = 700,
-		height = 200,
+		width = GAME_WIDTH,
+		height = GAME_HEIGHT,
 		player = {
 			x: 0,
 			y: height - 100,
@@ -46,15 +50,37 @@
 		floor = {
 			x: 0,
 			y: height - 50,
-			width: 700,
+			width: GAME_WIDTH,
 			height: 20
 		}
+		levels = 1,
 		keys = [],
 		friction = 0.8,
 		gravity = 0.3;
 
+	//apply var WxH onto element's dimension
+	console.log(typeof(canvas));
 	canvas.width = width;
 	canvas.height = height;
+
+	function Wall(color, x, y, width, height){
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+		this.color = color;
+		this.draw = function(){
+			context.fillStyle = this.color;
+			context.fillRect(this.x, this.y, this.width, this.height);
+		};
+		this.update = function(){
+			this.draw();
+		}
+	}
+	
+	var Wall1 = new Wall("white",300,floor.y-50,20,50);
+
+	//where the fun begins
 	function updateGame() {
 		player.velX++;
 		player.velX *= friction;
@@ -62,14 +88,14 @@
 		player.x += player.velX;
 		player.y += player.velY;
 
-
 		// check for up keys
 		if (keys[38] || keys[32]) {
 			// up arrow or space
 			if (!player.jumping) {
 				player.jumping = true;
 				player.velY = -player.speed * 2;
-				
+				console.log(-player.speed);
+				console.log(player.velY);
 			}
 		}
 
@@ -82,18 +108,27 @@
 		//player hits the end
 		if((player.x + player.width) >= width){
 			player.x = 0;
+			levels++;
+			return;//example to exit out of function
 		}
+		
         
 		//draws the player onto the canvas
 		context.clearRect(0, 0, width, height);
+
 		context.fillStyle = "orange";
 		context.fillRect(player.x, player.y, player.width, player.height);
+		
+		// context.fillStyle = "white";
+		context.font = "20px Verdana";
+		context.fillText("Level: "+levels, 0, 20);
 
 		context.fillStyle = "white";
 		context.fillRect(floor.x, floor.y, floor.width, floor.height);
 
 		//loop
 		requestAnimationFrame(updateGame);
+		Wall1.update();
 	}
 
 	document.body.addEventListener("keydown", function (e) {
