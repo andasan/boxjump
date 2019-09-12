@@ -49,10 +49,17 @@
 			width: 700,
 			height: 20
 		}
+		friction = 0.8,
+		gravity = 0.3;
 
 	canvas.width = width;
 	canvas.height = height;
 	function updateGame() {
+
+		player.velY += gravity;
+		player.y += player.velY;
+			
+			
 		//draws the player onto the canvas
 		context.clearRect(0, 0, width, height);
 		context.fillStyle = "orange";
@@ -60,6 +67,9 @@
 
 		context.fillStyle = "white";
 		context.fillRect(floor.x, floor.y, floor.width, floor.height);
+
+		//loop
+		requestAnimationFrame(updateGame);
 	}
 
 	window.addEventListener("load", function () {
