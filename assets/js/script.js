@@ -33,7 +33,7 @@ var canvas = document.getElementById("canvas"),
     friction = 0.8,
     gravity = 0.3,
     stageInit = true;
-    developerMode = true;
+    developerMode = false;
 
 //apply var WxH onto element's dimension
 console.log(typeof(canvas));
