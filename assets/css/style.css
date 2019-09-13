@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Anton);
+@import url(https://fonts.googleapis.com/css?family=Chilanka);
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ header {
     align-items: center;
     height: 400px;
     color: #fff;
-    font: normal 300 64px/1 'Anton', sans-serif;
+    font: normal 300 64px/1 'Chilanka', sans-serif;
 }
 
 canvas {
@@ -23,4 +23,12 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+footer{
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+    color: #fff;
+    text-align: center;
 }
