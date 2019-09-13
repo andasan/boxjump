@@ -155,20 +155,7 @@ function createWall(lvl){
 function updateGame() {
 
     if(levels > 10){
-        var subText;
-        context.clearRect(0, 0, width, height);
-
-        context.fillStyle = "white";
-        context.font = "60px Verdana";
-        context.fillText("You died "+death+" times", 120, 150);
-        if(death==0){
-            subText = "Wow!!! Congrats!!! Press R to retry"
-        }else{
-            subText = "Can you do better? Press R to retry"
-        }
-        context.font = "30px Verdana";
-        context.fillText(subText, 110, 190);
-        
+        endGame();
         return;
     }
 
@@ -245,6 +232,22 @@ function updateGame() {
     for(x=0;x<walls.length;x++){
         walls[x].update();
     }
+}
+
+function endGame(){
+    var subText;
+    context.clearRect(0, 0, width, height);
+
+    context.fillStyle = "white";
+    context.font = "60px Verdana";
+    context.fillText("You died "+death+" times", 120, 150);
+    if(death==0){
+        subText = "Wow!!! Congrats!!! Press R to retry"
+    }else{
+        subText = "Can you do better? Press R to retry"
+    }
+    context.font = "30px Verdana";
+    context.fillText(subText, 110, 190);
 }
 
 //listener for when a key is pressed
