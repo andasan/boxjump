@@ -34,6 +34,7 @@ var canvas = document.getElementById("canvas"),
     gravity = 0.3,
     stageInit = true;
     developerMode = false;
+    gamestart= false;
 
 //apply var WxH onto element's dimension
 console.log(typeof(canvas));
@@ -151,6 +152,14 @@ function createWall(lvl){
     
 }
 
+function splashScreen(){
+    context.clearRect(0, 0, width, height);
+
+    context.fillStyle = "white";
+    context.font = "60px Verdana";
+    context.fillText('Press "S" to Start', 120, 150);
+}
+
 //where the fun begins
 function updateGame() {
 
@@ -260,15 +269,25 @@ document.body.addEventListener("keyup", function (e) {
     keys[e.keyCode] = false;
 });
 
-//reload game on key R
+//reload game ||| keycode is R
 document.addEventListener('keyup', function(e){
     if(e.keyCode == 82)
       window.location.reload();
 });
 
+//gamestart listener ||| keycode is S
+document.addEventListener('keyup', function(e){
+    if(e.keyCode == 83 && !gamestart){
+        updateGame();
+        gamestart = true;
+    }
+});
+
 //page load listener
 window.addEventListener("load", function () {
-    updateGame();
+    //updateGame();
+    splashScreen();
+
 });
 
 
