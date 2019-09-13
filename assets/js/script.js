@@ -157,12 +157,11 @@ function splashScreen(){
 
     context.fillStyle = "white";
     context.font = "60px Verdana";
-    context.fillText('Press "S" to Start', 120, 150);
+    context.fillText('Press "S" to Start', 100, 150);
 }
 
 //where the fun begins
 function updateGame() {
-
     if(levels > 10){
         endGame();
         return;

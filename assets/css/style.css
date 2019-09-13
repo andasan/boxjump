@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Chilanka);
+@import url(https://fonts.googleapis.com/css?family=Teko);
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ header {
     align-items: center;
     height: 400px;
     color: #fff;
-    font: normal 300 64px/1 'Chilanka', sans-serif;
+    font: normal 300 64px/1 'Teko', sans-serif;
 }
 
 canvas {
