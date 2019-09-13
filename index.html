@@ -31,6 +31,11 @@
 		window.requestAnimationFrame = requestAnimationFrame;
 	});
 
+
+	
+
+	
+
 	//variable declarations
 	const GAME_WIDTH = 700, GAME_HEIGHT = 200;
 	var canvas = document.getElementById("canvas"),
@@ -55,8 +60,10 @@
 		}
 		levels = 1,
 		keys = [],
+		walls = [],
 		friction = 0.8,
-		gravity = 0.3;
+		gravity = 0.3,
+		stageInit = true;
 
 	//apply var WxH onto element's dimension
 	console.log(typeof(canvas));
@@ -69,22 +76,69 @@
         this.width = width;
         this.height = height;
 		this.color = color;
+		var timeInterval= 300;		//time between 2 draw
+		var thick = 3;     	//thickness of a line per loop instance
+		var cpt = 0;
+		
 		this.draw = function(){
-			context.fillStyle = this.color;
+			context.fillStyle = "white";
 			context.fillRect(this.x, this.y, this.width, this.height);
-		};
+		}
+
+		function draw(){
+			context.fillStyle = "white";
+			context.fillRect(x, y, width, height);
+		}
+		
+
+		// var timeInterval= 250,          //time between 2 draw
+		// thick = 3,             //thickness of a line per loop instance
+		// cpt = 0;
+
+		// function draw(x,y,width,height,z){
+		// 	var tempY = y + height - z;
+		// 	//Limit top of rect in order to get desired size
+		// 	if(tempY < y){
+		// 		tempY = y
+		// 	}
+		// 	console.log("w:"+width+" h:"+height+" y:"+y+" z:"+z);
+		// 	context.fillStyle = "white";
+		// 	context.fillRect(x, tempY, width, thick);
+		// };
+		
+		// this.update = function(){
+		// 	//loop will process fast but we make a delay on each draw with setTimeout which grow at each iteration
+		// 	for(var z = thick; z < this.height+thick ; z += thick){
+		// 		setTimeout(function(z){
+		// 			draw(x,y,width,height,z);
+		// 		}, timeInterval*cpt, z);
+		// 		cpt++
+		// 	}
+		// 	//this.draw();
+		// }
+
 		this.update = function(){
 			this.draw();
 		}
 	}
-	
-	var Wall1 = new Wall("white",300,floor.y-50,20,50);
+
+	walls.push(new Wall("white",300,floor.y-50,20,50));
+	walls.push(new Wall("white",450,floor.y-30,20,30));
+
 
 	//where the fun begins
 	function updateGame() {
-		player.velX++;
+
+		if(stageInit){
+			setTimeout(function(){ 
+				player.velX++;
+				// stageInit = false;
+			}, 1000);
+		}
+		
 		player.velX *= friction;
 		player.velY += gravity;
+		
 		player.x += player.velX;
 		player.y += player.velY;
 
@@ -105,11 +159,24 @@
 			player.jumping = false;
 		}
 
+		// wall collision
+		for(var i = 0; i < walls.length; i++){
+			var w = walls[i];
+			if(player.x+player.width >= w.x && 
+				player.x <= w.x+w.width && 
+				player.y+player.height >= w.y && 
+				player.y <= w.y+w.height){
+					console.log("collision");
+					player.x = 0;
+					return;
+			}
+		}
+
 		//player hits the end
 		if((player.x + player.width) >= width){
 			player.x = 0;
 			levels++;
-			return;//example to exit out of function
+			// return;//example to exit out of function
 		}
 		
         
@@ -128,7 +195,12 @@
 
 		//loop
 		requestAnimationFrame(updateGame);
-		Wall1.update();
+		
+		//Wall1.update();
+
+		for(x=0;x<walls.length;x++){
+			walls[x].update();
+		}
 	}
 
 	document.body.addEventListener("keydown", function (e) {
