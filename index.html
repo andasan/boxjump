@@ -4,6 +4,9 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="description" content="A simple JavaScript Game inspired by Lessmilk. Jump over the obstacles to get to the next stage.">
+		<meta name="keywords" content="HTML,CSS,JavaScript,Game,Platformer,Andasan">
+		<meta name="author" content="andasan">
 		<title>Platformer - Box Jump</title>
 		<style>
 			*{ margin: 0; padding: 0;}
@@ -29,15 +32,10 @@
 		//constant rendering or the game's looping logic || all browser support
 		var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 		window.requestAnimationFrame = requestAnimationFrame;
-	});
-
-
-	
-
-	
+	})
 
 	//variable declarations
-	const GAME_WIDTH = 700, GAME_HEIGHT = 200;
+	const GAME_WIDTH = 700, GAME_HEIGHT = 300;
 	var canvas = document.getElementById("canvas"),
 		context = canvas.getContext("2d"),
 		width = GAME_WIDTH,
@@ -54,7 +52,7 @@
 		},
 		floor = {
 			x: 0,
-			y: height - 50,
+			y: height - 150,
 			width: GAME_WIDTH,
 			height: 20
 		}
@@ -64,6 +62,7 @@
 		friction = 0.8,
 		gravity = 0.3,
 		stageInit = true;
+		developerMode = true;
 
 	//apply var WxH onto element's dimension
 	console.log(typeof(canvas));
@@ -122,9 +121,67 @@
 		}
 	}
 
-	walls.push(new Wall("white",300,floor.y-50,20,50));
-	walls.push(new Wall("white",450,floor.y-30,20,30));
+	function createWall(lvl){
+		//reset walls every level
+		walls = [];
 
+		//when creating/testing new levels
+		if(developerMode){
+			walls.push(new Wall("white",180,floor.y-30,20,30));
+			walls.push(new Wall("white",200,floor.y-50,20,50));
+			walls.push(new Wall("white",220,floor.y-30,20,30));
+
+			walls.push(new Wall("white",340,floor.y-30,20,30));
+			walls.push(new Wall("white",360,floor.y-50,20,50));
+			walls.push(new Wall("white",380,floor.y-30,20,30));
+
+			walls.push(new Wall("white",500,floor.y-30,20,30));
+			walls.push(new Wall("white",520,floor.y-50,20,50));
+			walls.push(new Wall("white",540,floor.y-30,20,30));
+		}
+		else{
+			if(lvl == 1){
+				walls.push(new Wall("white",300,floor.y-30,20,30));
+			}else if(lvl == 2){
+				walls.push(new Wall("white",200,floor.y-30,20,30));
+				walls.push(new Wall("white",350,floor.y-30,20,30));
+			}else if(lvl == 3){
+				walls.push(new Wall("white",280,floor.y-30,20,30));
+				walls.push(new Wall("white",300,floor.y-30,20,30));
+				walls.push(new Wall("white",320,floor.y-30,20,30));
+				walls.push(new Wall("white",340,floor.y-30,20,30));
+			}else if(lvl == 4){
+				walls.push(new Wall("white",280,floor.y-30,20,30));
+				walls.push(new Wall("white",300,floor.y-30,20,30));
+				walls.push(new Wall("white",320,floor.y-30,20,30));
+
+				walls.push(new Wall("white",440,floor.y-30,20,30));
+				walls.push(new Wall("white",460,floor.y-30,20,30));
+				walls.push(new Wall("white",480,floor.y-30,20,30));
+			}else if(lvl == 5){
+				walls.push(new Wall("white",280,floor.y-30,20,30));
+				walls.push(new Wall("white",300,floor.y-50,20,50));
+				walls.push(new Wall("white",320,floor.y-30,20,30));
+
+				walls.push(new Wall("white",440,floor.y-30,20,30));
+				walls.push(new Wall("white",460,floor.y-50,20,50));
+				walls.push(new Wall("white",480,floor.y-30,20,30));
+			}else if(lvl == 6){
+				walls.push(new Wall("white",180,floor.y-30,20,30));
+				walls.push(new Wall("white",200,floor.y-50,20,50));
+				walls.push(new Wall("white",220,floor.y-30,20,30));
+
+				walls.push(new Wall("white",340,floor.y-30,20,30));
+				walls.push(new Wall("white",360,floor.y-50,20,50));
+				walls.push(new Wall("white",380,floor.y-30,20,30));
+
+				walls.push(new Wall("white",500,floor.y-30,20,30));
+				walls.push(new Wall("white",520,floor.y-50,20,50));
+				walls.push(new Wall("white",540,floor.y-30,20,30));
+			}
+		}
+		
+	}
 
 	//where the fun begins
 	function updateGame() {
@@ -136,6 +193,7 @@
 			}, 1000);
 		}
 		
+		//player movement mechanics
 		player.velX *= friction;
 		player.velY += gravity;
 		
@@ -178,7 +236,9 @@
 			levels++;
 			// return;//example to exit out of function
 		}
-		
+
+
+		createWall(levels);
         
 		//draws the player onto the canvas
 		context.clearRect(0, 0, width, height);
@@ -189,28 +249,30 @@
 		// context.fillStyle = "white";
 		context.font = "20px Verdana";
 		context.fillText("Level: "+levels, 0, 20);
+		context.fillText("Press Space to jump", GAME_WIDTH/2-100, GAME_HEIGHT-10);
 
 		context.fillStyle = "white";
 		context.fillRect(floor.x, floor.y, floor.width, floor.height);
 
 		//loop
 		requestAnimationFrame(updateGame);
-		
-		//Wall1.update();
 
 		for(x=0;x<walls.length;x++){
 			walls[x].update();
 		}
 	}
 
+	//listener for when a key is pressed
 	document.body.addEventListener("keydown", function (e) {
 		keys[e.keyCode] = true;
 	});
 
+	//listener for when a key is released
 	document.body.addEventListener("keyup", function (e) {
 		keys[e.keyCode] = false;
 	});
 
+	//page load listener
 	window.addEventListener("load", function () {
 		updateGame();
 	});
