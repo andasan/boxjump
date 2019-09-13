@@ -158,10 +158,6 @@ function updateGame() {
         var subText;
         context.clearRect(0, 0, width, height);
 
-        context.fillStyle = "orange";
-        context.fillRect(287, 95, 20, 20);
-        context.fillRect(481, 95, 20, 20);
-
         context.fillStyle = "white";
         context.font = "60px Verdana";
         context.fillText("You died "+death+" times", 120, 150);
